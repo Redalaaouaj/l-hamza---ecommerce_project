@@ -3,21 +3,20 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProductRequest;
-use App\Models\Category;
 use App\Models\Product;
 use App\Models\ProductImage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
-class ProductController extends Controller
+class StoreController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $products = Product::paginate(5);
-        return view('products.index',compact('products'));
+        $products = Product::orderByDesc('created_at')->get();
+        return view('store.index',compact('products'));
     }
 
     /**
@@ -25,8 +24,7 @@ class ProductController extends Controller
      */
     public function create()
     {
-        $categories = Category::all();
-        return view('products.create',compact('categories'));
+        return view('products.create');
     }
 
     /**
@@ -34,7 +32,7 @@ class ProductController extends Controller
      */
     public function store(ProductRequest $request)
     {
-        $product = Product::create($request->only(['title', 'description', 'quantity', 'price', 'category_id']));
+        $product = Product::create($request->only(['title', 'description', 'quantity', 'price']));
 
         if ($request->hasFile('images')) {
             foreach ($request->file('images') as $image) {
@@ -62,7 +60,7 @@ class ProductController extends Controller
      */
     public function update(ProductRequest $request, Product $product)
     {
-        $product->update($request->only(['title', 'description', 'quantity', 'price', 'category_id']));
+        $product->update($request->only(['title', 'description', 'quantity', 'price']));
 
         if ($request->hasFile('images')) {
             foreach ($request->file('images') as $image) {

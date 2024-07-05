@@ -9,6 +9,7 @@
 
 <a class="m-5 inline-flex items-center px-4 py-2 bg-blue-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-700 focus:bg-blue-700 active:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150" href="{{route('products.create')}}">New product</a>
 
+<h2 class="mx-7 underline font-bold text-[20px]">Products list:</h2>
 <div class="rounded-lg border border-gray-700 m-7">
   <div class="overflow-x-auto rounded-t-lg">
     <table class="min-w-full divide-y-2 divide-gray-700 bg-gray-200 text-sm">
@@ -17,6 +18,7 @@
           <th class="whitespace-nowrap px-4 py-2 font-medium text-gray-900">#</th>
           <th class="whitespace-nowrap px-4 py-2 font-medium text-gray-900">Title</th>
           <th class="whitespace-nowrap px-4 py-2 font-medium text-gray-900">Description</th>
+          <th class="whitespace-nowrap px-4 py-2 font-medium text-gray-900">Category</th>
           <th class="whitespace-nowrap px-4 py-2 font-medium text-gray-900">Images</th>
           <th class="whitespace-nowrap px-4 py-2 font-medium text-gray-900">Quantity</th>
           <th class="whitespace-nowrap px-4 py-2 font-medium text-gray-900">Price</th>
@@ -30,6 +32,7 @@
           <td class="whitespace-nowrap px-4 py-2">{{$i+1}}</td>
           <td class="whitespace-nowrap px-4 py-2">{{$product->title}}</td>
           <td class="whitespace-nowrap px-4 py-2">{{$product->description}}</td>
+          <td class="whitespace-nowrap px-4 py-2">{{$product->category->name}}</td>
           <td class="whitespace-nowrap px-4 py-2">
             @foreach ($product->images as $image)
             <img width="100px" src="{{ asset('storage/' . $image->image_path) }}" alt="Product Image">
