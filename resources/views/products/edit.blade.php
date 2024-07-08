@@ -2,7 +2,7 @@
 @section('content')
 
 <div class="mx-auto max-w-screen-xl px-4 py-6 sm:px-6 lg:px-8">
-    <h2 class="underline">Add new product:</h2>
+    <h2 class="underline">Update {{$product->title}}:</h2>
     <form action="{{route('products.update',$product->id)}}" class="mx-auto mb-0 mt-8 max-w-md space-y-4" method="post" enctype="multipart/form-data">
         @csrf
         @method('put')
@@ -22,6 +22,18 @@
                 </textarea>
             </div>
             @error('description') <span class="text-red-600">{{$message}}</span> @enderror
+        </div>
+        <div>
+            <label for="category_id" class="text-gray-900">Category</label>
+            <div class="relative">
+                <select name="category_id" id="category_id" class="w-full rounded border-gray-200 p-4 pe-12 text-sm shadow-sm">
+                    <option value="">--Choose a category--</option>
+                    @foreach($categories as $cat)
+                    <option value="{{$cat->id}}" {{ old('category_id') ?? $product->category_id == $cat->id ? 'selected' : '' }}>{{$cat->name}}</option>
+                    @endforeach
+                </select>
+            </div>
+            @error('category_id') <span class="text-red-600">{{$message}}</span> @enderror
         </div>
         <div>
             <label for="images" class="text-gray-900">Upload images</label>

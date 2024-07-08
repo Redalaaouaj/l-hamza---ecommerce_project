@@ -27,12 +27,13 @@
 
             <div class="relative">
                 <select name="category_id" id="category_id" class="w-full rounded border-gray-200 p-4 pe-12 text-sm shadow-sm">
+                <option value="">--Choose a category--</option>
                     @foreach($categories as $cat)
-                    <option value="{{$cat->id}}">{{$cat->name}}</option>
+                    <option value="{{$cat->id}}" {{ old('category_id') == $cat->id ? 'selected' : '' }}>{{$cat->name}}</option>
                     @endforeach
                 </select>
             </div>
-            @error('description') <span class="text-red-600">{{$message}}</span> @enderror
+            @error('category_id') <span class="text-red-600">{{$message}}</span> @enderror
         </div>
         <div>
             <label for="images" class="text-gray-900">Upload images</label>

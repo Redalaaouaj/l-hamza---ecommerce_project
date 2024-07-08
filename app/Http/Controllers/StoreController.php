@@ -6,6 +6,7 @@ use App\Http\Requests\ProductRequest;
 use App\Models\Product;
 use App\Models\ProductImage;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
 class StoreController extends Controller
@@ -15,6 +16,7 @@ class StoreController extends Controller
      */
     public function index()
     {
+        if (!Auth::user()) return redirect()->route('login');
         $products = Product::orderByDesc('created_at')->get();
         return view('store.index',compact('products'));
     }
