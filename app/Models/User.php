@@ -45,7 +45,7 @@ class User extends Authenticatable
 
     public function isAdmin() :bool
     {
-        return $this->role === 'admin';
+        return $this->hasRole('admin');
     }
 
     public function hasRole(string $role) :bool

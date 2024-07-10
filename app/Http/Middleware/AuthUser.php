@@ -16,7 +16,9 @@ class AuthUser
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (!Auth::user()->hasRole('user')) abort(403);
+        if (Auth::check()){
+            if(!Auth::user()->hasRole('user')) abort(403);
+        }
         return $next($request);
     }
 }

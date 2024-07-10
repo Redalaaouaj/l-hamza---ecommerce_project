@@ -20,13 +20,13 @@
     <div class="min-h-screen ">
         <nav x-data="{ open: false }" class="bg-gray-200 border-b border-gray-400">
             <!-- Primary Navigation Menu -->
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
                 <div class="flex justify-between h-16">
 
                     <!-- Logo -->
-                    <div class="shrink-0 flex items-center">
+                    <div class="flex items-center shrink-0">
                         <a href="{{ route('products.index') }}">
-                            <img src="{{asset('favicon.ico')}}" alt="logo">
+                            <img src="{{asset('LHAMZA.png')}}" class="h-12" alt="logo">
                         </a>
                     </div>
 
@@ -46,9 +46,9 @@
 
 
                     <!-- Hamburger -->
-                    <div class="-me-2 flex items-center sm:hidden">
-                        <button @click="open = ! open" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition duration-150 ease-in-out">
-                            <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
+                    <div class="flex items-center -me-2 sm:hidden">
+                        <button @click="open = ! open" class="inline-flex items-center justify-center p-2 text-gray-400 transition duration-150 ease-in-out rounded-md hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500">
+                            <svg class="w-6 h-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
                                 <path :class="{'hidden': open, 'inline-flex': ! open }" class="inline-flex" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
                                 <path :class="{'hidden': ! open, 'inline-flex': open }" class="hidden" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                             </svg>
@@ -72,15 +72,15 @@
 
         <!-- Page Heading -->
         @if (isset($header))
-        <header class="bg-white  shadow">
-            <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+        <header class="bg-white shadow">
+            <div class="px-4 py-6 mx-auto max-w-7xl sm:px-6 lg:px-8">
                 {{ $header }}
             </div>
         </header>
         @endif
 
         <!-- Page Content -->
-        <div class="w-full sm:max-w-md mt-6 mx-auto px-6 py-4 bg-white shadow-md overflow-hidden sm:rounded-lg">
+        <div class="w-full px-6 py-4 mx-auto mt-6 overflow-hidden bg-white shadow-md sm:max-w-md sm:rounded-lg">
             {{ $slot }}
         </div>
     </div>

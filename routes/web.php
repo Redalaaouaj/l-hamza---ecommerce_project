@@ -34,6 +34,6 @@ Route::middleware(['auth.admin'])->group(function () {
 });
 
 Route::middleware(['auth.user'])->group(function () {
-    Route::get('/', [StoreController::class, 'index']);
+    Route::get('/', [StoreController::class, 'index'])->name('store');
 });
 require __DIR__ . '/auth.php';

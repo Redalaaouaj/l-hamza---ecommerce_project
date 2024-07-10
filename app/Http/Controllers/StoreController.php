@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProductRequest;
+use App\Models\Category;
 use App\Models\Product;
 use App\Models\ProductImage;
 use Illuminate\Http\Request;
@@ -14,11 +15,36 @@ class StoreController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         if (!Auth::user()) return redirect()->route('login');
-        $products = Product::orderByDesc('created_at')->get();
-        return view('store.index',compact('products'));
+
+        $productsQuery = Product::query()->with('category');
+        $title = $request->input('title');
+        $max = $request->input('max');
+        $min = $request->input('min') ?? 0;
+        $cats = $request->input('categories');
+        $categories = Category::with('products')->has('products')->get();
+
+        if($request->filled('title')) {
+            $productsQuery->where('title','like',"%{$title}%");
+        };
+        if($request->filled('categories')) {
+            $productsQuery->whereIn('category_id',$cats);
+        };
+        if($request->filled('max')) {
+            $productsQuery->where('price','<=',$max);
+        };
+        $productsQuery->where('price','>=',$min);
+        
+        $price = Product::pluck('price')->all();
+        $prices = [
+            'minPrice' => min($price),
+            'maxPrice' => max($price),
+        ];
+
+        $products = $productsQuery->get();
+        return view('store.index',compact('products','categories','prices'));
     }
 
     /**
