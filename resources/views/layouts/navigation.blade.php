@@ -15,8 +15,12 @@
                     <x-nav-link :href="route('products.index')" :active="request()->routeIs('products.index')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('categories.index')" :active="request()->routeIs('categories.index')">
+                        {{ __('Categories') }}
+                    </x-nav-link>
                     @endcan
                     @cannot('dashboard')
+                    @if(request()->routeIs('store'))
 
                     <form class="max-w-lg mx-auto mt-3 w-[500px]">
                         <div class="">  
@@ -31,7 +35,7 @@
                             </div>
                         </div>
                     </form>
-
+                    @endif
                     @endcannot
                 </div>
 
