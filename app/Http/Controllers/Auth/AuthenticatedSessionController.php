@@ -30,7 +30,9 @@ class AuthenticatedSessionController extends Controller
         $request->session()->regenerate();
 
         $route = RouteServiceProvider::HOME;
-        if(Auth::user()->hasRole('admin')) $route = '/products';
+        if (Auth::user()->hasRole('admin')) {
+            $route = '/products';
+        }
         return redirect()->intended($route);
     }
 

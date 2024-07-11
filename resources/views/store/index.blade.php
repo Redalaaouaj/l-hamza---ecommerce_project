@@ -109,7 +109,7 @@
         <!-- <span class="absolute top-0 left-0 px-2 m-2 text-sm font-medium text-center text-white bg-black rounded-full">39% OFF</span> -->
       </a>
       <div class="px-5 pb-5 mt-4">
-        <a href="#">
+        <a href="{{route('products.show',$product->id)}}">
           <h5 class="text-xl tracking-tight text-slate-900">{{$product->title}}</h5>
         </a>
         <div class="flex items-center justify-between mt-2 mb-5">
@@ -158,6 +158,6 @@
     @endforelse
   </div>
 </div>
-
+{{$products->links()}}
 
 @endsection

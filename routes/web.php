@@ -17,13 +17,14 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::middleware(['auth.admin'])->group(function () {
+Route::middleware(['auth','auth.admin'])->group(function () {
     Route::resource('products', ProductController::class)->except('show');
     Route::resource('categories', CategoryController::class);
 });
 
-Route::middleware(['auth.user'])->group(function () {
+Route::middleware(['auth','auth.user'])->group(function () {
     Route::get('/', [StoreController::class, 'index'])->name('store');
+    Route::get('/cart', [StoreController::class, 'cart'])->name('cart');
     Route::get('products/{id}', [ProductController::class, 'show'])->name('products.show');
 });
 
