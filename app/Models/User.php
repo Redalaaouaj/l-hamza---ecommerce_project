@@ -52,4 +52,9 @@ class User extends Authenticatable
     {
         return $this->getAttribute('role') === $role;
     }
+
+    public function carts()
+    {
+        return $this->hasMany(Cart::class);
+    }
 }

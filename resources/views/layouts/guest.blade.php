@@ -25,7 +25,7 @@
 
                     <!-- Logo -->
                     <div class="flex items-center shrink-0">
-                        <a href="{{ route('products.index') }}">
+                        <a href="#">
                             <img src="{{asset('LHAMZA.png')}}" class="h-12" alt="logo">
                         </a>
                     </div>

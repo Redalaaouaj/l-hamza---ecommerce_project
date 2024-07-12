@@ -3,11 +3,19 @@
     <div class="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
             <!-- Logo -->
+            @can('dashboard')
+            <div class="flex items-center shrink-0">
+                <a href="{{ route('products.index') }}">
+                    <img src="{{asset('LHAMZA.png')}}" class="h-12" alt="logo">
+                </a>
+            </div>
+            @else
             <div class="flex items-center shrink-0">
                 <a href="{{ route('store') }}">
                     <img src="{{asset('LHAMZA.png')}}" class="h-12" alt="logo">
                 </a>
             </div>
+            @endcan
 
             <!-- Navigation Links -->
             <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
@@ -48,10 +56,13 @@
                         <button class="inline-flex items-center px-3 py-2 text-sm font-medium leading-4 text-gray-500 transition duration-150 ease-in-out bg-white border border-transparent rounded-md hover:text-gray-700 focus:outline-none">
                             <div>{{ Auth::user()->name }}</div>
 
-                            <div class="ms-1">
-                                <svg class="w-4 h-4 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                                    <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
-                                </svg>
+                            <div class="relative">
+                                <div class="ms-1">
+                                    <svg class="w-4 h-4 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                                    </svg>
+                                </div>
+                                <span id="cart-item-count" class="absolute bottom-3.5 left-16 inline-block size-5 text-sm font-thin leading-2 text-center text-orange-600 bg-white rounded-full">{{ $itemCount ?? 0 }}</span>
                             </div>
                         </button>
                     </x-slot>
@@ -73,7 +84,7 @@
                     </x-slot>
                 </x-dropdown>
                 @cannot('dashboard')
-                <a href="{{route('cart')}}" class="ml-4 text-center text-sm font-medium">
+                <a href="{{route('cart.show')}}" class="ml-4 text-center text-sm font-medium">
                     <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-orange-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
                     </svg></a>
@@ -125,3 +136,19 @@
         </div>
     </div>
 </nav>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    fetch("{{ route('cart.itemCount') }}", {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': '{{ csrf_token() }}'
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        document.getElementById('cart-item-count').textContent = data.count;
+    })
+    .catch(error => console.error('Error:', error));
+});
+</script>

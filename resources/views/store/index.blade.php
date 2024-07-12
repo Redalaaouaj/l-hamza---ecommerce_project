@@ -7,7 +7,7 @@
 </div>
 @endif
 
-<div class="max-w-2xl mx-auto">
+<div class="hidden sm:block sm:max-w-2xl sm:mx-auto">
 
   <div id="default-carousel" class="relative" data-carousel="static">
 
@@ -64,36 +64,38 @@
 
 
 <div class="m-12">
-<h3 class="w-full rounded-md bg-orange-600 px-5 py-2.5 text-center text-xl font-bold text-white">Last Products</h3>
+  <h3 class="w-full rounded-md bg-orange-600 px-5 py-2.5 text-center text-xl font-bold text-white">Last Products</h3>
   <div class="grid gap-4 md:grid-cols-4 ">
     <div class="flex flex-col w-full max-w-xs h-96 mt-16 p-5 overflow-hidden bg-orange-300 borderborder-gray-100 rounded-xl shadow-md group">
       @php
       $categoriesIds = request()->input('categories') ?? [];
       @endphp
       <form>
-      <h3 class="font-semibold mb-3">Filter By Category:</h3>
-      @foreach($categories as $category)
-      <div class="flex items-center mb-2">
-        <input @checked(in_array($category->id, $categoriesIds)) type="checkbox" name="categories[]"
-        value="{{$category->id}}" class="form-checkbox h-4 w-4 text-orange-600 focus:outline-none focus:ring-1 focus:ring-orange-600 transition duration-150 ease-in-out">
-        <label class="ml-2 text-gray-900">{{$category->name}}</label>
-      </div>
-      @endforeach
-      <h3 class="font-semibold my-2">Pricing:</h3>
-      <div class="flex items-center flex-col">
-        <div>
-          <label for="min">Min:</label>
-          <input type="number" min="{{$prices['minPrice']}}" max="{{$prices['maxPrice']}}" value="{{request()->input('min')}}" name="min" id="min" class="rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-600 transition duration-150 ease-in-out"/>
+        <h3 class="font-semibold mb-3">Filter By Category:</h3>
+        @foreach($categories as $category)
+        <div class="flex items-center mb-2">
+          <input @checked(in_array($category->id, $categoriesIds)) type="checkbox" name="categories[]"
+          value="{{$category->id}}" class="form-checkbox h-4 w-4 text-orange-600 focus:outline-none focus:ring-1 focus:ring-orange-600 transition duration-150 ease-in-out">
+          <label class="ml-2 text-gray-900">{{$category->name}}</label>
         </div>
-        <div>
-          <label for="max">Max:</label>
-          <input type="number" min="{{$prices['minPrice']}}" max="{{$prices['maxPrice']}}" value="{{request()->input('max')}}" name="max" id="max" class="rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-600 transition duration-150 ease-in-out">
+        @endforeach
+        <h3 class="font-semibold my-2">Pricing:</h3>
+        <div class="">
+          <div class="relative mb-6">
+            <label for="min">Min:</label>
+            <input id="min" type="range" min="{{$prices['minPrice']}}" max="{{$prices['maxPrice']}}" value="{{old('min', $prices['minPrice'])}}" name="min" class="w-full h-2 bg-orange-500 rounded-lg appearance-none cursor-pointer ">
+            <span id="min-value" class="text-sm text-gray-800 absolute start-0 -bottom-6">{{$prices['minPrice']}} MAD</span>
+          </div>
+          <div class="relative mb-6">
+            <label for="max">Max:</label>
+            <input id="max" type="range" min="{{$prices['minPrice']}}" max="{{$prices['maxPrice']}}" value="{{old('max', $prices['maxPrice'])}}" name="max" class="w-full h-2 bg-orange-500 rounded-lg appearance-none cursor-pointer ">
+            <span id="max-value" class="text-sm text-gray-800 absolute end-0 -bottom-6">{{$prices['maxPrice']}} MAD</span>
+          </div>
         </div>
-      </div>
-      <div class="flex items-center m-2">
-      <x-primary-button type="submit" class="bg-blue-700 hover:bg-blue-600 focus:bg-blue-800 active:bg-blue-600" >Filter</x-primary-button>
-      <a type="reset" class="inline-flex items-center px-4 py-2 m-2 text-xs font-semibold bg-slate-50 rounded-lg" href="{{route('store')}}">RESET</a>
-      </div>
+        <div class="flex items-center m-2">
+          <x-primary-button type="submit" class="bg-blue-700 hover:bg-blue-600 focus:bg-blue-800 active:bg-blue-600">Filter</x-primary-button>
+          <a type="reset" class="inline-flex items-center px-4 py-2 m-2 text-xs font-semibold bg-slate-50 rounded-lg" href="{{route('store')}}">RESET</a>
+        </div>
       </form>
 
     </div>
@@ -118,11 +120,12 @@
             <span class="text-sm line-through text-red-600">{{$product->price + 100}}</span>
           </p>
         </div>
-        <a href="#" class="flex items-center justify-center rounded-md bg-orange-600 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-orange-500 focus:outline-none focus:ring-4 focus:ring-orange-100">
+        <a href="{{ route('cart.add', $product->id) }}" class="flex items-center justify-center rounded-md bg-orange-600 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-orange-500 focus:outline-none focus:ring-4 focus:ring-orange-100">
           <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
             <path stroke-linecap="round" stroke-linejoin="round" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
           </svg>
-          Add to cart</a>
+          Add to cart
+        </a>
       </div>
     </div>
 
@@ -160,4 +163,18 @@
 </div>
 {{$products->links()}}
 
+<script>
+  const minRange = document.getElementById('min');
+  const maxRange = document.getElementById('max');
+  const minValue = document.getElementById('min-value');
+  const maxValue = document.getElementById('max-value');
+
+  minRange.addEventListener('input', function() {
+    minValue.textContent = minRange.value + ' MAD';
+  });
+
+  maxRange.addEventListener('input', function() {
+    maxValue.textContent = maxRange.value + ' MAD';
+  });
+</script>
 @endsection
