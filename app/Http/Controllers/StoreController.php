@@ -12,7 +12,6 @@ class StoreController extends Controller
 {
     public function index(Request $request)
     {
-        if (!Auth::user()) return redirect()->route('login');
 
         $productsQuery = Product::query()->with('category');
         $title = $request->input('title');

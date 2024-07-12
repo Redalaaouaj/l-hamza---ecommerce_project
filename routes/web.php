@@ -23,7 +23,6 @@ Route::middleware(['auth','auth.admin'])->group(function () {
 });
 
 Route::middleware(['auth','auth.user'])->group(function () {
-    Route::get('/', [StoreController::class, 'index'])->name('store');
     Route::get('products/{id}', [ProductController::class, 'show'])->name('products.show');
     Route::get('cart/add/{productId}', [CartController::class, 'addToCart'])->name('cart.add');
     Route::get('cart', [CartController::class, 'showCart'])->name('cart.show');
@@ -31,5 +30,6 @@ Route::middleware(['auth','auth.user'])->group(function () {
     Route::delete('/cart/delete', [CartController::class, 'deleteItem'])->name('cart.deleteItem');
     Route::get('/cart/item-count', [CartController::class, 'getItemCount'])->name('cart.itemCount');
 });
+Route::get('/', [StoreController::class, 'index'])->name('store');
 
 require __DIR__ . '/auth.php';
